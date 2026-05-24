@@ -1,0 +1,27 @@
+{
+  "name": "pac-man",
+  "entry": "pac-man.py",
+  "icon": "assets/PacManAssets-PacMan.png",
+  "platform": "itch.io",
+  "target": "linux",
+  "include": [
+    "assets/",
+    "libs/",
+    "src/",
+    "config.json"
+  ],
+  "exclude": [
+    "__pycache__",
+    ".mypy_cache",
+    "venv",
+    "docs"
+  ],
+  "pyinstaller_options": [
+    "--onefile",
+    "--name", "pac-man",
+    "--add-data", "assets:assets",
+    "--add-data", "libs:libs",
+    "--add-data", "config.json:."
+  ],
+  "notes": "Build the binary with 'pyinstaller pac-man.spec' or use the options above. Upload the resulting binary as a private/unlisted build on itch.io."
+}

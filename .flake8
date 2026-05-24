@@ -1,0 +1,3 @@
+[flake8]
+exclude = venv,libs,assets,__pycache__,.mypy_cache,docs,build,dist
+max-line-length = 100
