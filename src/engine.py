@@ -16,18 +16,19 @@ class GameController:
         info = pygame.display.Info()
         self.width = info.current_w
         self.height = info.current_h
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
         self.score = 0
-        self.lives = 3
+        self.lives = config['lives']
         self.config = config
         self.level = 1
         self.mode = 0
-        self._start_level()
+        self.timer = config["level_max_time"] * 60
+        self.name = ''
 
     def _start_level(self) -> None:
-        level_config = self.config.get("level", [{"width": 21, "height": 21}])[0]
+        level_config = self.config.get("level", [{"width": 21, "height": 21}])[self.level - 1]
         maze_width = level_config.get("width", 21)
         maze_height = level_config.get("height", 21)
 
@@ -104,6 +105,8 @@ class GameController:
         self.effects: list[ScorePopup] = []
         self.ghosts_eaten_count = 0
         self.death_timer = 0
+        self.lives = self.config['lives']
+        self.timer = self.config["level_max_time"] * 60
 
     def _reset_positions(self) -> None:
         self.pacman.x, self.pacman.y = float(self.start_positions[self.pacman][0]), float(self.start_positions[self.pacman][1])
@@ -152,6 +155,10 @@ class GameController:
         while self.running:
             match self.mode:
                 case 0:
+
+                    self.level = 1
+                    self.name = ''
+
                     self.screen.fill('black')
 
                     self._print_text((150, 10), 25, 'Press Esc to quit the game', 'white')
@@ -165,6 +172,7 @@ class GameController:
                             if event.key == pygame.K_ESCAPE:
                                 self.running = False
                             elif event.key == pygame.K_SPACE:
+                                self._start_level()
                                 self.mode = 1
                     
                     pygame.display.flip()
@@ -174,8 +182,10 @@ class GameController:
                         if event.type == pygame.QUIT:
                             self.running = False
                         elif event.type == pygame.KEYDOWN:
+                            # pause
                             if event.key == pygame.K_ESCAPE:
                                 self.mode = 2
+                            # dir
                             elif event.key == pygame.K_UP:
                                 self.pacman.next_direction = Direction.UP
                             elif event.key == pygame.K_DOWN:
@@ -184,6 +194,22 @@ class GameController:
                                 self.pacman.next_direction = Direction.LEFT
                             elif event.key == pygame.K_RIGHT:
                                 self.pacman.next_direction = Direction.RIGHT
+                            # cheat
+                            elif event.key == pygame.K_INSERT: # Skip
+                                self.level += 1
+                                self._start_level()
+                                pygame.time.wait(1000)
+                                continue
+                            elif event.key == pygame.K_HOME: # Lobby
+                                self.mode = 0
+                                continue
+                            elif event.key == pygame.K_END: # Death
+                                self.mode = 3
+                                continue
+
+                    if self.level > len(self.config['level']):
+                        self.mode = 4
+                        continue
 
                     if self.frightened_timer == 0 and self.mode_index < len(self.mode_timings):
                         self.mode_timer += 1
@@ -282,7 +308,7 @@ class GameController:
                             if self.lives > 0:
                                 self._reset_positions()
                             else:
-                                self.running = False
+                                self.mode = 3
 
                     pm_x, pm_y = round(self.pacman.x), round(self.pacman.y)
 
@@ -310,7 +336,11 @@ class GameController:
                             self.collectibles.remove(entity)
                             self.entities.remove(entity)
 
-                    self.view.render(self.entities, self.score, self.lives, self.level, self.effects)
+                    self.timer -= 1
+                    if self.timer // 60 < 1:
+                        self.mode = 3
+
+                    self.view.render(self.entities, self.score, self.lives, self.level, self.effects, self.timer//60)
                 
                 case 2:
                     self.screen.fill('black')
@@ -334,22 +364,48 @@ class GameController:
                 case 3:
                     self.screen.fill('black')
 
+                    self._print_text((150, 10), 25, 'Press Esc to quit the game', 'white')
+                    self._print_text((1920/2, 100), 100, 'Pac-Man', 'yellow')
+                    self._print_text((1920/2, 400), 50, f'Enter your name: {self.name}        {self.score}', 'white')
+                    self._print_text((1920/2, 300), 100, 'Game Lost', 'white')
+
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             self.running = False
                         elif event.type == pygame.KEYDOWN:
                             if event.key == pygame.K_ESCAPE:
-                                pass
+                                self.mode = 0
+                            elif event.key == pygame.K_RETURN:
+                                self.mode = 0
+                            elif event.key == pygame.K_BACKSPACE:
+                                self.name = self.name[:-1]
+                        elif event.type == pygame.TEXTINPUT and len(self.name) < 10:
+                            self.name += event.text
+                    
+                    pygame.display.flip()
 
                 case 4:
                     self.screen.fill('black')
-                    
+
+                    self._print_text((150, 10), 25, 'Press Esc to quit the game', 'white')
+                    self._print_text((1920/2, 100), 100, 'Pac-Man', 'yellow')
+                    self._print_text((1920/2, 400), 50, f'Enter your name: {self.name}        {self.score}', 'white')
+                    self._print_text((1920/2, 300), 100, 'Congratulations !!!', 'white')
+
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             self.running = False
                         elif event.type == pygame.KEYDOWN:
                             if event.key == pygame.K_ESCAPE:
-                                pass
+                                self.mode = 0
+                            elif event.key == pygame.K_RETURN:
+                                self.mode = 0
+                            elif event.key == pygame.K_BACKSPACE:
+                                self.name = self.name[:-1]
+                        elif event.type == pygame.TEXTINPUT and len(self.name) < 10:
+                            self.name += event.text
+                    
+                    pygame.display.flip()
 
                 case _:
                     self.mode = 0

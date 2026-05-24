@@ -75,7 +75,7 @@ class GameView:
                 elif cell in self.textures:
                     self.background_surface.blit(self.textures[cell], (px + center_offset, py + center_offset))
 
-    def render(self, entities: list[Entity], score: int = 0, lives: int = 3, level: int = 1, effects: list[ScorePopup] | None = None) -> None:
+    def render(self, entities: list[Entity], score: int = 0, lives: int = 3, level: int = 1, effects: list[ScorePopup] | None = None, timer = 90) -> None:
         if effects is None:
             effects = []
         self.screen.blit(self.background_surface, (0, 0))
@@ -106,11 +106,13 @@ class GameView:
             self.screen.blit(text_surface, (px, py))
             
         score_surface = self.font.render(f"SCORE: {score}", True, (255, 255, 255))
-        self.screen.blit(score_surface, (20, 20))
+        self.screen.blit(score_surface, (50, 410))
         lives_surface = self.font.render(f"LIVES: {lives}", True, (255, 255, 0))
-        self.screen.blit(lives_surface, (20, 60))
+        self.screen.blit(lives_surface, (50, 470))
         level_surface = self.font.render(f"LEVEL: {level}", True, (255, 255, 255))
-        self.screen.blit(level_surface, (20, 100))
+        self.screen.blit(level_surface, (50, 540))
+        timer_surface = self.font.render(f"TIMER: {timer}", True, (255, 255, 255))
+        self.screen.blit(timer_surface, (50, 600))
 
         pygame.display.flip()
 

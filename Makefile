@@ -8,7 +8,7 @@ debug:
 	python3 -m pdb pac-man.py config.json
 
 clean:
-	rm -rf __pycache__ .mypy_cache .pytest_cache
+	rm -rf __pycache__ */__pycache__ */*/__pycache__ .mypy_cache .pytest_cache
 
 lint:
 	flake8 .
