@@ -6,7 +6,7 @@ from typing import Any
 DEFAULT_CONFIG: dict[str, Any] = {
     "highscore_filename": "highscores.json",
     "gist_id": "4cec1b33133b826fa11f4323ae72acf5",
-    "gist_token": "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",
+    "gist_token": "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",
     "seed": 42,
     "lives": 3,
     "level_max_time": 90,
