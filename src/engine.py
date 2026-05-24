@@ -62,7 +62,9 @@ class GameController:
         self.running = True
 
         self.highscore_mgr = HighscoreManager(
-            str(config.get("highscore_filename", "highscores.json"))
+            str(config.get("highscore_filename", "highscores.json")),
+            gist_id=str(config.get("gist_id", "")),
+            gist_token=str(config.get("gist_token", "")),
         )
         self.cheats = Cheats()
         self.name_input: NameInput = NameInput()
