@@ -52,7 +52,7 @@ class GameController:
             info = pygame.display.Info()
             self.width = info.current_w
             self.height = info.current_h
-            self.screen = pygame.display.set_mode((self.width, self.height))
+            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
             pygame.display.set_caption("Pac-Man")
         except pygame.error as e:
             print(f"error: cannot initialize pygame display ({e})")
@@ -627,7 +627,7 @@ class GameController:
                          + (entity.y - self.pacman.y) ** 2)
                 if dist2 < 0.25:
                     if entity.is_chased:
-                        pts = self.points_ghost * (2 ** self.ghosts_eaten_count)
+                        pts = self.points_ghost # * (2 ** self.ghosts_eaten_count) # check le sujet p14 
                         self.score += pts
                         self.ghosts_eaten_count += 1
                         entity.is_chased = False
