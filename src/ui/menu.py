@@ -81,10 +81,10 @@ def draw_instructions_screen(screen: pygame.Surface) -> None:
     draw_text(screen, "[Esc] Back to menu", 28, (w // 2, 140), "white")
 
     lines = [
-        "Move        : arrow keys or WASD",
-        "Pause       : Esc",
-        "Resume      : Space",
-        "Back to menu: M (from the pause screen)",
+        "Move : arrow keys or WASD",
+        "Pause : Esc",
+        "Resume : Space",
+        "Back to menu : M (from the pause screen)",
         "",
         "Eat pacgums to clear the level.",
         "Super-pacgums let you eat the ghosts for a short time.",

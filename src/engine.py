@@ -31,7 +31,7 @@ FPS = 60
 FULL_SPEED = 0.075
 
 REFERENCE_DOT_COUNT = 240
-REFERENCE_MAZE_AREA = 21 * 21
+REFERENCE_MAZE_AREA = 18 * 18
 MIN_LEVEL_TIME = 20
 
 
@@ -155,7 +155,7 @@ class GameController:
         """
         w, h = self._maze_size_for_level(level)
         scale = (w * h) / REFERENCE_MAZE_AREA
-        return max(MIN_LEVEL_TIME, round(self.level_max_time * scale))
+        return max(MIN_LEVEL_TIME, round(self.level_max_time * scale * 2))
 
     def _pacman_normal_speed(self) -> float:
         """Return Pac-Man's normal speed for the current level (arcade rates)."""
@@ -262,10 +262,17 @@ class GameController:
         for row_idx, row in enumerate(self.maze.grid):
             for col_idx, cell in enumerate(row):
                 if cell == 4:
-                    pacman_spawn = (col_idx, row_idx)
-                    self.maze.grid[row_idx][col_idx] = 0
+                    # if (cols - 1) // 2 % 2 == 1:
+                        pacman_spawn = (col_idx, row_idx)
+                        self.maze.grid[row_idx][col_idx] = 0
+                    # else:
+                    #     pacman_spawn = (col_idx - 2, row_idx)
+                    #     obj = Object("pacgum", (col_idx, row_idx))
+                        # self.entities.append(obj)
+                        # self.collectibles.append(obj)
                 elif cell == 3:
                     obj = Object("super_pacgum", (col_idx, row_idx))
+                    self.maze.grid[row_idx][col_idx] = 0
                     self.entities.append(obj)
                     self.collectibles.append(obj)
 

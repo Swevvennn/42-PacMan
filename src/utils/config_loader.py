@@ -13,17 +13,17 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "points_per_pacgum": 10,
     "points_per_super_pacgum": 50,
     "points_per_ghost": 200,
-    "level": [
-        {"width": 15, "height": 15},
-        {"width": 17, "height": 17},
-        {"width": 19, "height": 19},
-        {"width": 21, "height": 21},
-        {"width": 21, "height": 21},
-        {"width": 23, "height": 23},
-        {"width": 23, "height": 23},
-        {"width": 25, "height": 25},
-        {"width": 27, "height": 27},
-        {"width": 29, "height": 29},
+    "level":    [
+        { "width": 15, "height": 15 },
+        { "width": 16, "height": 16 },
+        { "width": 17, "height": 17 },
+        { "width": 18, "height": 18 },
+        { "width": 19, "height": 19 },
+        { "width": 20, "height": 20 },
+        { "width": 21, "height": 21 },
+        { "width": 22, "height": 22 },
+        { "width": 23, "height": 23 },
+        { "width": 24, "height": 24 }
     ],
 }
 

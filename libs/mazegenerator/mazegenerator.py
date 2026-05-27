@@ -47,6 +47,7 @@ class MazeGenerator:
         random.seed(seed) if seed > 0 else random.seed()
         self._seed = seed
         self._create_empty_maze()
+        self._add_42_to_maze()
         self._generate_maze(self._entryx, self._entryy, 0)
         self._find_short_path()
 
@@ -112,7 +113,6 @@ class MazeGenerator:
         self._path[y][x] = 1
         non_mutable = self._maze[y][x]
         self._maze[y][x] = 15 & ~from_code
-        self._add_42_to_maze()
         for nx, ny, code, opp_code in self._get_neighbors(x, y):
             if code & non_mutable:
                 continue
