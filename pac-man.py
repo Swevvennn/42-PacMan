@@ -23,7 +23,7 @@ def main() -> None:
         game = GameController(config)
         game.run()
     except KeyboardInterrupt:
-        print("\ninterrupted by user, bye.")
+        print("\ninterrupted by user")
         sys.exit(0)
 
 
