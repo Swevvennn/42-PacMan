@@ -34,31 +34,21 @@ def _normalise(entries: list[Any]) -> list[dict[str, Any]]:
 class HighscoreManager:
     """Top-10 highscores persisted locally and on a shared public gist.
 
-    The local JSON file is the offline fallback; the gist is the shared
-    source. Every network call has a short timeout and silently falls back
-    to local-only on error so the game never crashes when offline.
+    The local JSON;
     """
 
-    def __init__(self, filepath: str, gist_id: str = "",
-                 gist_token: str = "") -> None:
-        """Initialise the manager and load entries from disk and gist.
+    def __init__(self, filepath: str) -> None:
+        """Initialise the manager and load entries from disk.
 
         Args:
             filepath: Local JSON file path.
-            gist_id: Public gist identifier. Empty disables remote sync.
-            gist_token: PAT with ``gist`` scope. Empty disables remote save
-                but still allows remote read since the gist is public.
         """
         self.filepath = filepath
-        # gist_id and gist_token parameters are accepted for backward
-        # compatibility but remote sync has been removed.
-        self.gist_id = ""
-        self.gist_token = ""
         self.entries: list[dict[str, Any]] = []
-        self.load()
+        self.entries = self.load()
 
-    def _load_local(self) -> list[dict[str, Any]]:
-        """Read the local file, returning an empty list on any error."""
+    def load(self) -> list[dict[str, Any]]:
+        """Read the local file"""
         if not os.path.isfile(self.filepath):
             return []
         try:
@@ -71,23 +61,13 @@ class HighscoreManager:
             return []
         return _normalise(data)
 
-    def load(self) -> None:
-        """Merge local and remote entries into ``self.entries``."""
-        # Remote sync removed: only load local highscores.
-        self.entries = self._load_local()
-
-    def _save_local(self) -> None:
+    def save(self) -> None:
         """Write the current entries back to the local file."""
         try:
             with open(self.filepath, "w", encoding="utf-8") as f:
                 json.dump(self.entries, f, indent=2)
         except OSError as e:
             print(f"highscore: cannot save local file ({e})")
-
-    def save(self) -> None:
-        """Persist entries locally and try to sync them to the gist."""
-        # Remote sync removed: only persist locally.
-        self._save_local()
 
     def add(self, name: str, score: int) -> None:
         """Insert a new entry, keep the top 10 sorted by score.
