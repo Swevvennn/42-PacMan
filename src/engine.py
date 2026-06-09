@@ -49,11 +49,9 @@ class GameController:
         try:
             pygame.display.init()
             pygame.font.init()
-            info = pygame.display.Info()
-            self.width = info.current_w
-            self.height = info.current_h
-            self.screen = pygame.display.set_mode((self.width, self.height),
-                                                  pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode(
+                (0, 0), pygame.FULLSCREEN | pygame.SCALED)
+            self.width, self.height = self.screen.get_size()
             pygame.display.set_caption("Pac-Man")
         except pygame.error as e:
             print(f"error: cannot initialize pygame display ({e})")
