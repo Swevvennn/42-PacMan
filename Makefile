@@ -1,11 +1,15 @@
+PIP := venv/bin/pip
+PY := venv/bin/python3
+
 install:
-	pip install -r requirements.txt
+	python3 -m venv venv
+	$(PIP) install -r requirements.txt
 
 run:
 	python3 pac-man.py config.json
 
 debug:
-	python3 -m pdb pac-man.py config.json
+	$(PY) -m pdb pac-man.py config.json
 
 clean:
 	rm -rf __pycache__ */__pycache__ */*/__pycache__ .mypy_cache venv

@@ -22,7 +22,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         {"width": 22, "height": 22},
         {"width": 23, "height": 23},
         {"width": 24, "height": 24}
-    ],
+    ]
 }
 
 
