@@ -69,7 +69,7 @@ class Ghost(Entity):
         Returns:
             The list of cells from start to target, empty if unreachable.
         """
-        queue: deque = deque([start])
+        queue: deque[tuple[int, int]] = deque([start])
         visited = {start}
         parent: dict[tuple[int, int], tuple[int, int] | None] = {start: None}
 

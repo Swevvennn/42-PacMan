@@ -56,6 +56,7 @@ class HighscoreManager:
         self.gist_token = ""
         self.entries: list[dict[str, Any]] = []
         self.load()
+
     def _load_local(self) -> list[dict[str, Any]]:
         """Read the local file, returning an empty list on any error."""
         if not os.path.isfile(self.filepath):
@@ -82,6 +83,7 @@ class HighscoreManager:
                 json.dump(self.entries, f, indent=2)
         except OSError as e:
             print(f"highscore: cannot save local file ({e})")
+
     def save(self) -> None:
         """Persist entries locally and try to sync them to the gist."""
         # Remote sync removed: only persist locally.
