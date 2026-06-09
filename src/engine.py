@@ -262,14 +262,8 @@ class GameController:
         for row_idx, row in enumerate(self.maze.grid):
             for col_idx, cell in enumerate(row):
                 if cell == 4:
-                    # if (cols - 1) // 2 % 2 == 1:
-                        pacman_spawn = (col_idx, row_idx)
-                        self.maze.grid[row_idx][col_idx] = 0
-                    # else:
-                    #     pacman_spawn = (col_idx - 2, row_idx)
-                    #     obj = Object("pacgum", (col_idx, row_idx))
-                        # self.entities.append(obj)
-                        # self.collectibles.append(obj)
+                    pacman_spawn = (col_idx, row_idx)
+                    self.maze.grid[row_idx][col_idx] = 0
                 elif cell == 3:
                     obj = Object("super_pacgum", (col_idx, row_idx))
                     self.maze.grid[row_idx][col_idx] = 0
@@ -634,7 +628,7 @@ class GameController:
                          + (entity.y - self.pacman.y) ** 2)
                 if dist2 < 0.25:
                     if entity.is_chased:
-                        pts = self.points_ghost # * (2 ** self.ghosts_eaten_count) # check le sujet p14 
+                        pts = self.points_ghost
                         self.score += pts
                         self.ghosts_eaten_count += 1
                         entity.is_chased = False

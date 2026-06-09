@@ -36,7 +36,7 @@ class Object(Entity):
         """Return the grid position as floats for the renderer."""
         return (float(self._position[0]), float(self._position[1]))
 
-    def get_sprite(self, spritesheet: pygame.Surface) -> pygame.Surface:
+    def get_sprite(self, spritesheet: pygame.surface.Surface) -> pygame.surface.Surface:
         """Return the 16x16 sprite that matches this object.
 
         Args:

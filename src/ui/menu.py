@@ -1,9 +1,11 @@
-from typing import Any
+from typing import Any, Union
 
 import pygame
 
+SurfaceType = Union[pygame.Surface, pygame.surface.Surface]
 
-def draw_text(screen: pygame.Surface, msg: str, size: int,
+
+def draw_text(screen: SurfaceType, msg: str, size: int,
               center: tuple[int, int], color: Any) -> None:
     """Render a single line of text, horizontally centred on ``center``.
 
@@ -20,7 +22,7 @@ def draw_text(screen: pygame.Surface, msg: str, size: int,
     screen.blit(surf, rect)
 
 
-def draw_main_menu(screen: pygame.Surface,
+def draw_main_menu(screen: SurfaceType,
                    highscores: list[dict[str, Any]]) -> None:
     """Draw the title, the four menu entries and the top scores.
 
@@ -51,7 +53,7 @@ def draw_main_menu(screen: pygame.Surface,
     pygame.display.flip()
 
 
-def draw_highscores_screen(screen: pygame.Surface,
+def draw_highscores_screen(screen: SurfaceType,
                            highscores: list[dict[str, Any]]) -> None:
     """Draw the full top-10 highscores screen."""
     screen.fill("black")
@@ -72,7 +74,7 @@ def draw_highscores_screen(screen: pygame.Surface,
     pygame.display.flip()
 
 
-def draw_instructions_screen(screen: pygame.Surface) -> None:
+def draw_instructions_screen(screen: SurfaceType) -> None:
     """Draw the controls / rules screen."""
     screen.fill("black")
     w = screen.get_width()

@@ -96,7 +96,7 @@ class PacMan(Entity):
 
         self.x, self.y = next_x, next_y
 
-    def get_sprite(self, spritesheet: pygame.Surface) -> pygame.Surface:
+    def get_sprite(self, spritesheet: pygame.surface.Surface) -> pygame.surface.Surface:
         """Return the player sprite for the current frame and direction."""
         x = self.frame * 32
         y = 0

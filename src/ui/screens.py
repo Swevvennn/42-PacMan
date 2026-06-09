@@ -1,6 +1,6 @@
 import pygame
 
-from src.ui.menu import draw_text
+from src.ui.menu import draw_text, SurfaceType
 
 
 class NameInput:
@@ -38,7 +38,7 @@ class NameInput:
         return self.buffer.strip()
 
 
-def draw_pause(screen: pygame.Surface) -> None:
+def draw_pause(screen: SurfaceType) -> None:
     """Draw the pause screen overlay."""
     screen.fill("black")
     w = screen.get_width()
@@ -49,7 +49,7 @@ def draw_pause(screen: pygame.Surface) -> None:
     pygame.display.flip()
 
 
-def draw_game_over(screen: pygame.Surface, score: int,
+def draw_game_over(screen: SurfaceType, score: int,
                    name_input: NameInput, cheats_used: bool = False) -> None:
     """Draw the Game Over screen with the highscore name prompt.
 
@@ -80,7 +80,7 @@ def draw_game_over(screen: pygame.Surface, score: int,
     pygame.display.flip()
 
 
-def draw_victory(screen: pygame.Surface, score: int,
+def draw_victory(screen: SurfaceType, score: int,
                  name_input: NameInput, cheats_used: bool = False) -> None:
     """Draw the Victory screen with the highscore name prompt.
 

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Union
 
 import pygame
 
@@ -11,7 +11,9 @@ from src.models.player import PacMan
 class GameView:
     """Render the maze, the entities, the HUD and the score popups."""
 
-    def __init__(self, maze: Any, screen: pygame.Surface, tile_size: int,
+    SurfaceType = Union[pygame.Surface, pygame.surface.Surface]
+
+    def __init__(self, maze: Any, screen: SurfaceType, tile_size: int,
                  offset_x: int, offset_y: int) -> None:
         """Pre-load every sprite and bake the wall background once.
 
@@ -40,8 +42,8 @@ class GameView:
         self.textures_spritesheet = pygame.image.load(
             "assets/PacManAssets_Map_TileSet.png"
         ).convert_alpha()
-        self.textures: dict[int, pygame.Surface] = {}
-        self.wall_textures: dict[int, pygame.Surface] = {}
+        self.textures: dict[int, GameView.SurfaceType] = {}
+        self.wall_textures: dict[int, GameView.SurfaceType] = {}
         self.load_textures(self.textures_spritesheet)
         self.font = pygame.font.Font(None, 48)
         self.small_font = pygame.font.Font(None, 36)
@@ -65,7 +67,7 @@ class GameView:
             mask += 8
         return mask
 
-    def get_sprite(self, e: Entity) -> pygame.Surface:
+    def get_sprite(self, e: Entity) -> SurfaceType:
         """Dispatch to the right spritesheet for the given entity type.
 
         Raises:
@@ -222,7 +224,7 @@ class GameView:
 
         pygame.display.flip()
 
-    def load_textures(self, spritesheet: pygame.Surface) -> None:
+    def load_textures(self, spritesheet: SurfaceType) -> None:
         """Cut wall pieces out of the spritesheet, one per neighbour mask."""
         bases = {
             "wall":       spritesheet.subsurface(

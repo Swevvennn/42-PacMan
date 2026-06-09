@@ -39,7 +39,7 @@ class Entity(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_sprite(self, spritesheet: pygame.Surface) -> pygame.Surface:
+    def get_sprite(self, spritesheet: pygame.surface.Surface) -> pygame.surface.Surface:
         """Return the sprite to blit for the current frame."""
         raise NotImplementedError()
 
