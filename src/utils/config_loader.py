@@ -123,7 +123,8 @@ def load_config(filepath: str) -> dict[str, Any]:
         expected = type(DEFAULT_CONFIG[key])
         if isinstance(value, expected) and not isinstance(value, bool):
             if expected is int and value < 0:
-                print(f"warning: '{key}' must be non-negative, keeping default")
+                print(f"warning: '{key}' must be non-negative,\
+ keeping default")
                 continue
             config[key] = value
         else:

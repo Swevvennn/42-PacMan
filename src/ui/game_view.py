@@ -49,7 +49,8 @@ class GameView:
         self.small_font = pygame.font.Font(None, 36)
         self.popup_font = pygame.font.Font(None, 24)
         self.big_timer_font = pygame.font.Font(None, 220)
-        self.background_surface = pygame.Surface(self.screen.get_size(), pygame.FULLSCREEN)
+        self.background_surface = pygame.Surface(self.screen.get_size(),
+                                                 pygame.FULLSCREEN)
         self._render_background()
 
     def _get_wall_mask(self, row_idx: int, col_idx: int) -> int:

@@ -88,7 +88,8 @@ class MazeAdapter:
             self.grid[ry][rx] = 3
 
         mid_y = (self.height // 2) * 2 + 1
-        mid_x = (self.width // 2) * 2 + 1 if self.width % 2 == 1 else (self.width // 2) * 2 - 1
+        mid_x = (self.width // 2) * 2 + 1 if self.width % 2 == 1 \
+            else (self.width // 2) * 2 - 1
         self.grid[mid_y][mid_x] = 4
 
         return self.grid

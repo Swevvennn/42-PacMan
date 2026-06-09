@@ -52,7 +52,8 @@ class GameController:
             info = pygame.display.Info()
             self.width = info.current_w
             self.height = info.current_h
-            self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((self.width, self.height),
+                                                  pygame.FULLSCREEN)
             pygame.display.set_caption("Pac-Man")
         except pygame.error as e:
             print(f"error: cannot initialize pygame display ({e})")
@@ -71,7 +72,8 @@ class GameController:
         self.sounds = SoundManager()
 
         self.starting_lives: int = max(1, int(config.get("lives", 3)))
-        self.level_max_time: int = max(10, int(config.get("level_max_time", 90)))
+        self.level_max_time: int = max(10,
+                                       int(config.get("level_max_time", 90)))
         self.current_level_max_time: int = self.level_max_time
         self.points_pacgum: int = int(config.get("points_per_pacgum", 10))
         self.points_super: int = int(config.get("points_per_super_pacgum", 50))
@@ -158,7 +160,8 @@ class GameController:
         return max(MIN_LEVEL_TIME, round(self.level_max_time * scale * 2))
 
     def _pacman_normal_speed(self) -> float:
-        """Return Pac-Man's normal speed for the current level (arcade rates)."""
+        """Return Pac-Man's normal speed for the current level
+        (arcade rates)."""
         lvl = self.level
         if lvl == 1:
             return FULL_SPEED * 0.80
@@ -178,7 +181,8 @@ class GameController:
         return FULL_SPEED * 1.00
 
     def _ghost_normal_speed(self) -> float:
-        """Return the ghosts' normal chase/scatter speed for the current level."""
+        """Return the ghosts' normal chase/scatter speed
+        for the current level."""
         lvl = self.level
         if lvl == 1:
             return FULL_SPEED * 0.75
@@ -357,7 +361,8 @@ class GameController:
             g.is_chased = False
             g.flashes = False
             g.respawn_timer = 0
-        if self.active_fruit is not None and self.active_fruit in self.entities:
+        if (self.active_fruit is not None
+           and self.active_fruit in self.entities):
             self.entities.remove(self.active_fruit)
         self.active_fruit = None
         self.fruit_timer = 0

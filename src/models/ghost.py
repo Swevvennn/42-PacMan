@@ -246,7 +246,9 @@ class Ghost(Entity):
         elif dy < 0:
             self.direction = Direction.UP
 
-    def get_sprite(self, spritesheet: pygame.surface.Surface) -> pygame.surface.Surface:
+    def get_sprite(self,
+                   spritesheet: pygame.surface.Surface
+                   ) -> pygame.surface.Surface:
         """Return the ghost sprite for the current frame and state.
 
         Raises:
